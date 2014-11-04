@@ -1,5 +1,7 @@
 package mobile.DC;
 
+import java.sql.SQLException;
+
 import java.util.List;
 
 import mobile.CapaG.CapaG;
@@ -19,7 +21,7 @@ public class EmpleadoDC {
 
    
     
-    public Empleado[] getEmpleados() { 
+    public Empleado[] getEmpleados() throws SQLException { 
     return logica.getEmpleados();
     }
 

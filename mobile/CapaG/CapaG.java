@@ -5,6 +5,7 @@ import database.ConnectionFactory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import mobile.DTO.Empleado;
 
+import mobile.Generics.GenericCriteria;
 import mobile.Generics.Queryable;
 
 import oracle.adfmf.util.Utility;
@@ -24,15 +26,11 @@ public class CapaG extends Queryable {
 
     private List s_emps = null;
 
-    public Empleado[] getEmpleados() {
-        Connection conn = null;
-        List returnValue = new ArrayList();
-
-        try {
-            conn = ConnectionFactory.getConnection();
-
-            Statement stmt = conn.createStatement();
-            ResultSet result = stmt.executeQuery("SELECT ID, NOMBRE, EMAIL FROM EMPLEADOS;");
+    public Empleado[] getEmpleados() throws SQLException {
+            List returnValue= new ArrayList();
+            GenericCriteria criteria = new GenericCriteria("EMPLEADOS");
+            
+            ResultSet result = query(criteria);
             Empleado empleado;
             while (result.next()) {
                 empleado = new Empleado();
@@ -42,12 +40,6 @@ public class CapaG extends Queryable {
                 returnValue.add(empleado);
                 empleado = null;
             }
-            result.close();
-        } catch (Exception ex) {
-            Utility.ApplicationLogger.severe(ex.getMessage());
-            ex.printStackTrace();
-            throw new RuntimeException(ex);
-        }
         return (Empleado[]) returnValue.toArray(new Empleado[returnValue.size()]);
 
     }
