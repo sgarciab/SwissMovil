@@ -47,44 +47,24 @@ public class CapaG extends Queryable {
     public Empleado guardarEmpleados(String nombre, String cedula) {
 
         Empleado empleado = new Empleado(nombre, cedula);
-        Connection conn = null;
-
-        try {
-            conn = ConnectionFactory.getConnection();
-            Statement stmt = conn.createStatement();
-            String sql = "INSERT INTO EMPLEADOS (NOMBRE,EMAIL) VALUES ('"+empleado.getNombre()+"','" + empleado.getEmail() +"');";
-            stmt.execute(sql);
-            /*   ResultSet result = stmt.executeQuery("SELECT ID, NOMBRE, EMAIL FROM EMPLEADOS ORDER BY ID DESC LIMIT 1; ");
-            while (result.next()) {
-            empleado.setId(result.getInt("ID"));
-            empleado.setNombre(result.getString("NOMBRE"));
-            empleado.setEmail(result.getString("EMAIL"));
-            }  */
-        } catch (Exception ex) {
-            Utility.ApplicationLogger.severe(ex.getMessage());
-            ex.printStackTrace();
-            throw new RuntimeException(ex);
-        }
+        GenericCriteria criteria = new GenericCriteria("EMPLEADOS");
+        criteria.addInsertValues("NOMBRE", empleado.getNombre());
+        criteria.addInsertValues("EMAIL", empleado.getEmail());
+        insert(criteria);
         return empleado;
     }
 
     public Empleado actualizarEmpleado(int id, String nombre, String cedula) {
 
         Empleado empleado = new Empleado(id, nombre, cedula);
-        Connection conn = null;
+       
+        GenericCriteria criteria = new GenericCriteria("EMPLEADOS");
+        criteria.addUpdateValue("NOMBRE", empleado.getNombre() );
+        criteria.addUpdateValue("EMAIL", empleado.getEmail() );
+        criteria.addUpdateEqualsCriteria("ID", empleado.getId());
+        update(criteria);
 
-        try {
-            conn = ConnectionFactory.getConnection();
-            Statement stmt = conn.createStatement();
-            String sql =
-                "UPDATE EMPLEADOS SET NOMBRE='" + empleado.getNombre() + "',EMAIL='" + empleado.getEmail() +
-                "' WHERE ID=" + Integer.toString(empleado.getId()) + ";";
-            stmt.executeUpdate(sql);
-        } catch (Exception ex) {
-            Utility.ApplicationLogger.severe(ex.getMessage());
-            ex.printStackTrace();
-            throw new RuntimeException(ex);
-        }
+           
         return empleado;
     }
 }

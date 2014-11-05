@@ -32,10 +32,11 @@ public class TestGenericCriteria extends TestCase {
     }
     
     public void testUpdate() {
-        GenericCriteria criteria = new GenericCriteria("Hola");
-       criteria.addUpdateValue("campo", "valor");
-       criteria.addUpdateEqualsCriteria("esto", "estootro");
-      //  System.out.println(criteria.getUpdateQuery());
+        GenericCriteria criteria = new GenericCriteria("EMPLEADOS");
+        criteria.addUpdateValue("NOMBRE", "JUAN" );
+        criteria.addUpdateValue("EMAIL", "LOPEZ" );
+        criteria.addUpdateEqualsCriteria("ID", 132);   
+        System.out.println(criteria.getUpdateQuery());
     }
     
     
