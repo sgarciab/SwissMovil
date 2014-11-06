@@ -27,19 +27,19 @@ public class CapaG extends Queryable {
     private List s_emps = null;
 
     public Empleado[] getEmpleados() throws SQLException {
-            List returnValue= new ArrayList();
-            GenericCriteria criteria = new GenericCriteria("EMPLEADOS");
-            
-            ResultSet result = query(criteria);
-            Empleado empleado;
-            while (result.next()) {
-                empleado = new Empleado();
-                empleado.setId(result.getInt("ID"));
-                empleado.setNombre(result.getString("NOMBRE"));
-                empleado.setEmail(result.getString("EMAIL"));
-                returnValue.add(empleado);
-                empleado = null;
-            }
+        List returnValue = new ArrayList();
+        GenericCriteria criteria = new GenericCriteria("EMPLEADOS");
+
+        ResultSet result = query(criteria);
+        Empleado empleado;
+        while (result.next()) {
+            empleado = new Empleado();
+            empleado.setId(result.getInt("ID"));
+            empleado.setNombre(result.getString("NOMBRE"));
+            empleado.setEmail(result.getString("EMAIL"));
+            returnValue.add(empleado);
+            empleado = null;
+        }
         return (Empleado[]) returnValue.toArray(new Empleado[returnValue.size()]);
 
     }
@@ -57,14 +57,14 @@ public class CapaG extends Queryable {
     public Empleado actualizarEmpleado(int id, String nombre, String cedula) {
 
         Empleado empleado = new Empleado(id, nombre, cedula);
-       
+
         GenericCriteria criteria = new GenericCriteria("EMPLEADOS");
-        criteria.addUpdateValue("NOMBRE", empleado.getNombre() );
-        criteria.addUpdateValue("EMAIL", empleado.getEmail() );
+        criteria.addUpdateValue("NOMBRE", empleado.getNombre());
+        criteria.addUpdateValue("EMAIL", empleado.getEmail());
         criteria.addUpdateEqualsCriteria("ID", empleado.getId());
         update(criteria);
 
-           
+
         return empleado;
     }
 }
