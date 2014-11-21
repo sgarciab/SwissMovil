@@ -38,6 +38,13 @@ public class EmpleadoDC {
         return empleado;
     }
     
+    public void borrarEmpleado(int id) {
+        logica.borrarEmpleado(id);
+        providerChangeSupport.fireProviderRefresh("empleados");     
+     
+    }
+ 
+    
     
     private transient ProviderChangeSupport providerChangeSupport = new ProviderChangeSupport(this);
     

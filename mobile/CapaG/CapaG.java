@@ -67,4 +67,13 @@ public class CapaG extends Queryable {
 
         return empleado;
     }
+    
+    
+    public void borrarEmpleado(int id) {
+
+        GenericCriteria criteria = new GenericCriteria("EMPLEADOS");
+        criteria.addDeleteEqualsCriteria("ID", id);
+        delete(criteria);
+
+    }
 }
